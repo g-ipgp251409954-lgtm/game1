@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Among Us: Pengembaraan Makanan</title>
+<style>
+:root{--bg:#070b20;--panel:#101936;--cyan:#62efff;--pink:#ff5db8;--gold:#ffd778;--text:#f4f7ff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% 15%,#202e62 0,#0b1230 42%,#050817 100%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(#ffffffb8 1px,transparent 1.5px),radial-gradient(#75eaff80 1px,transparent 1.5px);background-size:83px 83px,137px 137px;background-position:0 0,32px 51px;opacity:.24;animation:stars 30s linear infinite}
+@keyframes stars{to{background-position:83px 166px,169px 188px}}
+.topbar{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:18px clamp(18px,5vw,64px);border-bottom:1px solid #ffffff14;background:#080d24aa;backdrop-filter:blur(14px)}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:.12em;font-size:.83rem}.brand-dot{width:12px;height:12px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan)}
+.status{font-size:.72rem;color:#a9b9e7;letter-spacing:.14em;text-transform:uppercase}.status span{color:#76ffc5}
+main{position:relative;z-index:1;max-width:1100px;margin:auto;padding:26px 20px 70px}.screen{display:none;min-height:75vh;align-items:center;justify-content:center;flex-direction:column;text-align:center;animation:arrive .7s cubic-bezier(.2,.8,.2,1) both}.screen.active{display:flex}
+@keyframes arrive{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.eyebrow{font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan);font-weight:800;margin:8px 0 14px}
+h1,h2,p{margin-top:0}h1{font-size:clamp(2.5rem,7vw,5.7rem);line-height:.98;letter-spacing:-.06em;margin-bottom:18px;font-weight:950}h1 .shine{background:linear-gradient(100deg,#fff 5%,#8bf4ff 45%,#d6b7ff 75%,#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-.04em;margin-bottom:10px}.lead{color:#b9c5e8;max-width:610px;line-height:1.7;font-size:1rem;margin:0 auto 26px}
+.hero-stage{height:245px;width:min(100%,540px);position:relative;display:flex;align-items:center;justify-content:center;margin:2px auto 18px;perspective:900px}
+.orbit{position:absolute;width:250px;height:75px;border:1px solid #62efff65;border-radius:50%;transform:rotate(-18deg);box-shadow:0 0 30px #55eaff16;animation:orbit 7s linear infinite}
+.orbit.two{width:310px;height:115px;transform:rotate(30deg);border-color:#b37dff50;animation-direction:reverse}
+@keyframes orbit{to{transform:rotate(342deg)}}
+.crew{--suit:#ff4f6d;position:relative;width:115px;height:145px;flex:none;filter:drop-shadow(0 18px 18px #0008);animation:float 3.2s ease-in-out infinite;transform-style:preserve-3d}
+.crew:before{content:"";position:absolute;left:12px;top:30px;width:91px;height:107px;border-radius:42% 42% 30% 30%;background:linear-gradient(115deg,color-mix(in srgb,var(--suit),white 28%),var(--suit) 44%,color-mix(in srgb,var(--suit),black 38%));box-shadow:inset 9px 0 8px #ffffff30,inset -10px -4px 12px #0003;z-index:2}
+.crew:after{content:"";position:absolute;left:31px;top:10px;width:73px;height:58px;border-radius:24px 30px 22px 22px;background:linear-gradient(145deg,#f1ffff 0%,#a9dce9 35%,#547b9c 73%,#243b61 100%);border:5px solid color-mix(in srgb,var(--suit),black 18%);box-shadow:inset 5px 5px 8px #fff9,inset -7px -6px 10px #07132b7a,0 4px 0 #0003;z-index:3;transform:translateZ(12px)}
+.leg{position:absolute;bottom:0;width:35px;height:47px;background:linear-gradient(90deg,color-mix(in srgb,var(--suit),black 32%),var(--suit),color-mix(in srgb,var(--suit),white 18%));border-radius:0 0 13px 13px;z-index:1}.leg.left{left:18px}.leg.right{right:6px}
+.backpack{position:absolute;left:0;top:70px;width:27px;height:52px;background:linear-gradient(90deg,#111d39,color-mix(in srgb,var(--suit),black 15%));border-radius:10px 3px 7px 10px;z-index:1;box-shadow:inset 3px 0 #ffffff25}
+.crew.gold{--suit:#ffc94f}.crew.blue{--suit:#46a7ff}.crew.mint{--suit:#51e2bd}.crew.purple{--suit:#a98bff}.crew.pink{--suit:#ff72bd}
+@keyframes float{0%,100%{transform:translateY(0) rotateY(-8deg) rotateZ(-2deg)}50%{transform:translateY(-13px) rotateY(8deg) rotateZ(2deg)}}
+.hero-crew{transform:scale(1.22)}.mini-crew{transform:scale(.7);transform-origin:center bottom;margin:-18px auto -8px}
+.btn{border:0;cursor:pointer;color:#071024;font-weight:900;letter-spacing:.02em;padding:15px 24px;border-radius:14px;background:linear-gradient(110deg,#7cf5ff,#b8a6ff);box-shadow:0 9px 28px #6defff24;transition:transform .2s,box-shadow .2s;font-size:.95rem}
+.btn:hover{transform:translateY(-3px);box-shadow:0 14px 35px #6defff40}.btn:active{transform:translateY(0)}.btn.secondary{background:#ffffff0a;border:1px solid #ffffff2a;color:#eaf2ff;box-shadow:none}.btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.progress{display:flex;gap:8px;margin:0 0 24px}.progress i{width:35px;height:4px;border-radius:9px;background:#ffffff1e}.progress i.on{background:var(--cyan);box-shadow:0 0 12px #62efff75}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;width:100%;max-width:850px;margin:26px auto 18px}
+.pick{position:relative;text-align:center;padding:20px 14px 18px;border-radius:22px;border:1px solid #ffffff1b;background:linear-gradient(155deg,#ffffff0c,#111a37d9);box-shadow:inset 0 1px #ffffff0d;cursor:pointer;transition:.25s;min-width:0;overflow:hidden}
+.pick:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 25%,#6beaff12,transparent 55%);pointer-events:none}
+.pick:hover{transform:translateY(-5px);border-color:#75edff70}.pick.selected{border-color:var(--cyan);box-shadow:0 0 0 1px #62efff3d,0 12px 36px #46cfff19;background:linear-gradient(155deg,#62efff19,#111a37e8)}
+.pick h3{font-size:1.05rem;margin:4px 0 6px}.pick p{font-size:.82rem;line-height:1.55;color:#aebcde;margin:0}.pick .crew{margin:4px auto 0}
+.tag{display:inline-block;border:1px solid #ffffff1d;border-radius:999px;padding:5px 9px;color:#aabbe1;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:9px}
+.mission-icon{font-size:2rem;display:block;margin:6px 0 14px;filter:drop-shadow(0 0 14px #6aefff3b)}
+.note{color:#93a4cc;font-size:.82rem;margin-top:10px}.quote{max-width:720px;font-size:clamp(1.35rem,3.7vw,2.6rem);font-weight:850;line-height:1.25;letter-spacing:-.035em;margin:18px auto}.quote em{font-style:normal;color:var(--cyan)}
+.portal-wrap{height:250px;width:100%;display:flex;justify-content:center;align-items:center;perspective:800px;overflow:hidden}
+.portal{height:190px;width:190px;border-radius:50%;border:3px solid #a9faff;position:relative;box-shadow:0 0 18px #62efff,0 0 50px #547eff7a,inset 0 0 28px #7cf5ff7a;animation:portalPulse 2.4s ease-in-out infinite;transform:rotateX(16deg)}
+.portal:before,.portal:after{content:"";position:absolute;inset:12px;border:2px solid #bda0ff;border-radius:50%;animation:spin 6s linear infinite}.portal:after{inset:27px;border-color:#fff;animation-duration:3s;animation-direction:reverse}
+.portal-core{position:absolute;inset:43px;border-radius:50%;background:radial-gradient(circle,#fff 0,#8af8ff 12%,#5c68f4 45%,#161b52 75%);box-shadow:0 0 30px #6ef4ff;animation:portalCore 1.5s ease-in-out infinite alternate}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes portalPulse{50%{transform:rotateX(16deg) scale(1.07);box-shadow:0 0 30px #62efff,0 0 75px #547effb0,inset 0 0 40px #7cf5ffb0}}@keyframes portalCore{to{transform:scale(.84);filter:hue-rotate(35deg)}}
+footer{text-align:center;color:#65749d;font-size:.72rem;letter-spacing:.08em;padding:0 15px 24px}.tiny{font-size:.7rem;color:#7e90bb;margin-top:20px}
+@media(max-width:650px){.cards{grid-template-columns:1fr;max-width:360px;gap:12px}.pick{padding:15px}.pick .crew{transform:scale(.58);margin:-20px auto -24px}.hero-stage{height:220px}.crew.hero-crew{transform:scale(1.03)}.topbar{padding:15px 18px}.status{font-size:.6rem}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="brand"><span class="brand-dot"></span> STARCADE <span style="color:#7f91bf">/ EDU QUEST</span></div><div class="status">SISTEM <span>● AKTIF</span></div></header>
+<main>
+<section class="screen active" id="welcome">
+  <div class="eyebrow">Misi khas · Edisi pengembaraan</div>
+  <div class="hero-stage"><div class="orbit"></div><div class="orbit two"></div><div class="crew hero-crew"><span class="backpack"></span><span class="leg left"></span><span class="leg right"></span></div></div>
+  <div class="eyebrow">Kru angkasa sedang memanggil!</div>
+  <h1>SEDIA UNTUK<br><span class="shine">MENEROKA?</span></h1>
+  <p class="lead">Satu isyarat misteri telah dikesan dari planet yang belum pernah diterokai. Pilih kru anda, selesaikan misi, dan buktikan anda penjelajah yang hebat!</p>
+  <button class="btn" onclick="go('choose-character')">MULAKAN PENGEMBARAAN <span aria-hidden="true">↗</span></button>
+  <div class="tiny">3 MISI · 1 KRU · PENGEMBARAAN TANPA HAD</div>
+</section>
+<section class="screen" id="choose-character">
+  <div class="progress"><i class="on"></i><i></i><i></i></div><div class="eyebrow">Fasa 01 / Pilih kru</div><h2>Siapa watak anda?</h2><p class="lead">Setiap penjelajah ada gaya tersendiri. Pilih seorang untuk menyertai misi.</p>
+  <div class="cards">
+    <button class="pick" data-character="Nova" onclick="selectCharacter(this)"><div class="crew"><span class="backpack"></span><span class="leg left"></span><span class="leg right"></span></div><span class="tag">Pakar strategi</span><h3>Nova</h3><p>Bijak membaca petunjuk dan merancang langkah.</p></button>
+    <button class="pick" data-character="Blitz" onclick="selectCharacter(this)"><div class="crew blue"><span class="backpack"></span><span class="leg left"></span><span class="leg right"></span></div><span class="tag">Pantas & berani</span><h3>Blitz</h3><p>Berani mencuba dan pantas menyelesaikan cabaran.</p></button>
+    <button class="pick" data-character="Luna" onclick="selectCharacter(this)"><div class="crew purple"><span class="backpack"></span><span class="leg left"></span><span class="leg right"></span></div><span class="tag">Peneroka</span><h3>Luna</h3><p>Peka, kreatif dan sentiasa ingin tahu.</p></button>
+  </div>
+  <p class="note" id="character-note" aria-live="polite">Pilih satu watak untuk membuka langkah seterusnya.</p>
+  <div class="actions"><button class="btn secondary" onclick="go('welcome')">Kembali</button><button class="btn" id="to-mission" disabled onclick="go('choose-mission')">PILIH MISI →</button></div>
+</section>
+<section class="screen" id="choose-mission">
+  <div class="progress"><i class="on"></i><i class="on"></i><i></i></div><div class="eyebrow">Fasa 02 / Pilih misi</div><h2>Destinasi seterusnya?</h2><p class="lead">Kru <strong id="chosen-character-label">anda</strong> sudah bersedia. Pilih satu misi untuk membuka portal.</p>
+  <div class="cards">
+    <button class="pick" data-mission="Jejak Rasa" onclick="selectMission(this)"><span class="mission-icon">🍜</span><span class="tag">Misi 01</span><h3>Jejak Rasa</h3><p>Kenali makanan tradisional melalui petunjuk visual.</p></button>
+    <button class="pick" data-mission="Padanan Rahsia" onclick="selectMission(this)"><span class="mission-icon">🧩</span><span class="tag">Misi 02</span><h3>Padanan Rahsia</h3><p>Padankan gambar makanan dengan nama yang tepat.</p></button>
+    <button class="pick" data-mission="Detektif Makanan" onclick="selectMission(this)"><span class="mission-icon">🔎</span><span class="tag">Misi 03</span><h3>Detektif Makanan</h3><p>Selesaikan teka-teki dan bongkar rahsia hidangan.</p></button>
+  </div>
+  <p class="note" id="mission-note" aria-live="polite">Misi yang dipilih akan menentukan cabaran anda.</p>
+  <div class="actions"><button class="btn secondary" onclick="go('choose-character')">Kembali</button><button class="btn" id="to-launch" disabled onclick="launch()">AKTIFKAN PORTAL →</button></div>
+</section>
+<section class="screen" id="launch-screen">
+  <div class="eyebrow">Sambungan portal stabil</div><div class="portal-wrap"><div class="portal"><div class="portal-core"></div></div></div>
+  <div class="eyebrow">Mesej daripada pusat kawalan</div><h2>Anda mampu lakukannya, kru!</h2>
+  <p class="quote">“Berani mencuba, bijak berfikir, dan <em>jangan berhenti meneroka.</em> Setiap jawapan membawa anda lebih dekat kepada kejayaan!”</p>
+  <p class="lead" id="launch-summary">Bersedia untuk melangkah ke dunia baharu.</p>
+  <div class="actions"><button class="btn" onclick="enterWorld()">MASUK KE DUNIA MISI ✦</button><button class="btn secondary" onclick="go('choose-mission')">Tukar misi</button></div>
+</section>
+<section class="screen" id="world-screen">
+  <div class="eyebrow">Portal berjaya ditembusi</div><div class="hero-stage"><div class="orbit"></div><div class="orbit two"></div><div class="crew gold"><span class="backpack"></span><span class="leg left"></span><span class="leg right"></span></div></div>
+  <div class="eyebrow">Misi anda bermula sekarang</div><h1><span class="shine" id="world-title">SELAMAT DATANG!</span></h1><p class="lead" id="world-description">Pengembaraan anda menanti.</p>
+  <div class="actions"><button class="btn" onclick="go('choose-mission')">PILIH MISI LAIN</button><button class="btn secondary" onclick="restart()">MULA SEMULA</button></div>
+  <p class="tiny">Prototaip interaktif — sambungkan butang ini ke aktiviti sebenar dalam Google Sites.</p>
+</section>
+</main>
+<footer>DIREKA UNTUK PEMBELAJARAN INTERAKTIF · STARCADE EDU QUEST</footer>
+<script>
+let character = '', mission = '';
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+function selectCharacter(el){document.querySelectorAll('#choose-character .pick').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');character=el.dataset.character;document.getElementById('character-note').textContent='Watak '+character+' dipilih. Kru anda sudah hampir lengkap!';document.getElementById('to-mission').disabled=false;}
+function selectMission(el){document.querySelectorAll('#choose-mission .pick').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');mission=el.dataset.mission;document.getElementById('mission-note').textContent='“'+mission+'” dipilih. Bersedia untuk mengaktifkan portal!';document.getElementById('to-launch').disabled=false;}
+function launch(){document.getElementById('chosen-character-label').textContent=character;document.getElementById('launch-summary').textContent='Kru '+character+' akan memulakan misi “'+mission+'”. Tarik nafas, fokus, dan teruskan!';go('launch-screen');}
+function enterWorld(){document.getElementById('world-title').textContent=mission.toUpperCase()+'!';const descriptions={'Jejak Rasa':'Terokai petunjuk makanan tradisional dan kenal pasti hidangan yang tersembunyi.','Padanan Rahsia':'Perhatikan setiap gambar dan padankan makanan dengan nama yang betul.','Detektif Makanan':'Gunakan pemerhatian dan pemikiran kreatif untuk menyelesaikan teka-teki makanan.'};document.getElementById('world-description').textContent='Penjelajah '+character+', '+(descriptions[mission]||'pengembaraan anda bermula sekarang');go('world-screen');}
+function restart(){character='';mission='';document.querySelectorAll('.pick').forEach(x=>x.classList.remove('selected'));document.getElementById('to-mission').disabled=true;document.getElementById('to-launch').disabled=true;document.getElementById('character-note').textContent='Pilih satu watak untuk membuka langkah seterusnya.';document.getElementById('mission-note').textContent='Misi yang dipilih akan menentukan cabaran anda.';go('welcome');}
+</script>
+</body></html>
